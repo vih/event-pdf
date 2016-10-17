@@ -1,0 +1,32 @@
+{
+    "name": "vih/event-pdf",
+    "description": "Create PDFs of of events.",
+    "type": "library",
+    "license": "MIT",
+    "homepage": "http://github.com/vih/event-pdf",
+    "authors": [
+        {
+            "name": "Lars Olesen",
+            "role": "lars@intraface.dk"
+        }
+    ],
+    "require": {
+        "tecnickcom/tcpdf": "6.2.*"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "~4.8",
+        "squizlabs/php_codesniffer": "2.*"
+    },
+    "minimum-stability": "dev",
+    "prefer-stable": true,
+    "autoload": {
+        "psr-4": {
+            "VIH\\Event\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "VIH\\Event\\Tests\\": "tests/"
+        }
+    }
+}
