@@ -6,12 +6,12 @@ use VIH\Event\EventInterface;
 
 class EventMock implements EventInterface
 {
-    function getTitle()
+    public function getTitle()
     {
         return 'My lecture title';
     }
 
-    function getDescription()
+    public function getDescription()
     {
         return 'My somewhat long description which has lots of cool lingo, so people want to buy the lecture.';
     }

@@ -1,134 +1,147 @@
 <?php
 namespace VIH\Event;
 
-abstract class Base extends \TCPDF {
-  protected $heading = 'Vejle Idrætshøjskoles foredrag';
-  protected $sub_title = 'Kom og høre med!';
-  protected $description = 'description';
-  protected $logo;
-  protected $events = array();
-  protected $link = '';
-  protected $base_url = '';
-  protected $author;
-  protected $font = 'helvetica';
-  protected $frontpage_font = 'helvetica';
+abstract class Base extends \TCPDF
+{
+    protected $heading = 'Vejle Idrætshøjskoles foredrag';
+    protected $sub_title = 'Kom og høre med!';
+    protected $description = 'description';
+    protected $logo;
+    protected $events = array();
+    protected $link = '';
+    protected $base_url = '';
+    protected $author;
+    protected $font = 'helvetica';
+    protected $frontpage_font = 'helvetica';
 
-  function setBaseUrl($base_url) {
-    $this->base_url = $base_url;
-  }
+    public function setBaseUrl($base_url)
+    {
+        $this->base_url = $base_url;
+    }
 
-  function setAuthor($author) {
-    $this->author = $author;
-  }
+    public function setAuthor($author)
+    {
+        $this->author = $author;
+    }
 
   /**
    * @param string $logo Path to the logo
    */
-  function setLogo($logo, $link = null) {
-    $this->logo = $logo;
-    $this->link = $link;
-  }
-
-  function setHeading($title) {
-    $this->heading = $title;
-  }
-
-  function setSubtitle($title) {
-    $this->sub_title = $title;
-  }
-
-  function setDescription($desc) {
-    $this->description = $desc;
-  }
-
-  function Header() {
-    // left blank to remove line in header added by TCPDF
-  }
-
-  function Footer() {
-    // left blank to remove line in header added by TCPDF
-  }
-
-  function clearJavascript($s) {
-    $do = true;
-    while ($do) {
-      $start = stripos($s, '<script');
-      $stop = stripos($s, '</script>');
-      if ((is_numeric($start)) && (is_numeric($stop))) {
-        $s = substr($s, 0, $start) . substr($s, ($stop + strlen('</script>')));
-      }
-      else {
-        $do = false;
-      }
+    public function setLogo($logo, $link = null)
+    {
+        $this->logo = $logo;
+        $this->link = $link;
     }
-    return trim($s);
-  }
 
-  /**
-   * @todo Should utilize Drupal own t()-function
-   */
-  protected function t($phrase) {
-    // Default to English
-    $phrases = array(
-      'Monday' => 'mandag',
-      'Tuesday' => 'tirsdag',
-      'Wednesday' => 'onsdag',
-      'Thursday' => 'torsdag',
-      'Friday' => 'fredag',
-      'Saturday' => 'lørdag',
-      'Sunday' => 'søndag',
-      'January' => 'januar',
-      'February' => 'februar',
-      'March' => 'marts',
-      'April' => 'april',
-      'May' => 'maj',
-      'June' => 'juni',
-      'July' => 'juli',
-      'August' => 'august',
-      'September' => 'september',
-      'October' => 'oktober',
-      'November' => 'november',
-      'December' => 'december',
-      '1' => 'januar',
-      '2' => 'februar',
-      '3' => 'marts',
-      '4' => 'april',
-      '5' => 'maj',
-      '6' => 'juni',
-      '7' => 'juli',
-      '8' => 'august',
-      '9' => 'september',
-      '10' => 'oktober',
-      '11' => 'november',
-      '12' => 'december'
-    );
-    if (!empty($phrases[$phrase])) {
-      return $phrases[$phrase];
+    public function setHeading($title)
+    {
+        $this->heading = $title;
     }
-    return $phrase;
-  }
 
-  abstract public function render();
+    public function setSubtitle($title)
+    {
+        $this->sub_title = $title;
+    }
 
-  /**
-   * Gets barcode file path
-   *
-   * @param string $url Registration url
-   * @param integer $height Height
-   * @param integer $width Width
-   *
-   * @return string or false
-   */
-  protected function getBarcodePath($url, $height, $width) {
-    $chart = array(
-      '#chart_id' => 'lecture_chart_' . md5($url),
-      '#type' => CHART_TYPE_QR,
-      '#size' => chart_size(200, 200),
-    );
+    public function setDescription($desc)
+    {
+        $this->description = $desc;
+    }
 
-    $chart['#data'][] = '';
-    $chart['#labels'][] = $url;
+    // @codingStandardsIgnoreStart
+    public function Header()
+    {
+        // left blank to remove line in header added by TCPDF
+    }
 
-    return chart_copy($chart, 'lecture_qr_' . md5($url), 'public://charts/');
-  }
+    public function Footer()
+    {
+        // left blank to remove line in header added by TCPDF
+    }
+    // @codingStandardsIgnoreEnd
+
+    public function clearJavascript($s)
+    {
+        $do = true;
+        while ($do) {
+            $start = stripos($s, '<script');
+            $stop = stripos($s, '</script>');
+            if ((is_numeric($start)) && (is_numeric($stop))) {
+                $s = substr($s, 0, $start) . substr($s, ($stop + strlen('</script>')));
+            } else {
+                $do = false;
+            }
+        }
+        return trim($s);
+    }
+
+    /**
+     * @todo Should utilize Drupal own t()-function
+     */
+    protected function t($phrase)
+    {
+        // Default to English
+        $phrases = array(
+        'Monday' => 'mandag',
+        'Tuesday' => 'tirsdag',
+        'Wednesday' => 'onsdag',
+        'Thursday' => 'torsdag',
+        'Friday' => 'fredag',
+        'Saturday' => 'lørdag',
+        'Sunday' => 'søndag',
+        'January' => 'januar',
+        'February' => 'februar',
+        'March' => 'marts',
+        'April' => 'april',
+        'May' => 'maj',
+        'June' => 'juni',
+        'July' => 'juli',
+        'August' => 'august',
+        'September' => 'september',
+        'October' => 'oktober',
+        'November' => 'november',
+        'December' => 'december',
+        '1' => 'januar',
+        '2' => 'februar',
+        '3' => 'marts',
+        '4' => 'april',
+        '5' => 'maj',
+        '6' => 'juni',
+        '7' => 'juli',
+        '8' => 'august',
+        '9' => 'september',
+        '10' => 'oktober',
+        '11' => 'november',
+        '12' => 'december'
+        );
+        if (!empty($phrases[$phrase])) {
+            return $phrases[$phrase];
+        }
+        return $phrase;
+    }
+
+    abstract public function render();
+
+    /**
+     * Gets barcode file path
+     *
+     * @param string $url Registration url
+     * @param integer $height Height
+     * @param integer $width Width
+     *
+     * @return string or false
+     */
+    protected function getBarcodePath($url, $height, $width)
+    {
+        $chart = array(
+        '#chart_id' => 'lecture_chart_' . md5($url),
+        '#type' => CHART_TYPE_QR,
+        '#size' => chart_size(200, 200),
+        );
+
+        $chart['#data'][] = '';
+        $chart['#labels'][] = $url;
+
+        return chart_copy($chart, 'lecture_qr_' . md5($url), 'public://charts/');
+    }
 }
